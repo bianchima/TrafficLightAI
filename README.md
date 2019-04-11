@@ -49,3 +49,4 @@ graphics: either text based or basic visual canvas, tbd
 * Interpret these implementations for graphics
 * Create graphics to represent these
 * Create an AI to analyze and run these traffic lights
+  * Subsequently, stores the results of this training to re-use
