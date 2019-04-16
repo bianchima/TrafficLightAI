@@ -1,14 +1,11 @@
 # SAMPLE TEXT FILE
 
-city block size: 300
-
-x: 4
-x-roads: [1,3]
-
-y: 3
-y-roads: [1,2]
-
-
-
+{
+    "block_size": 300,
+    "x": 4,
+    "x-roads": [1,3],
+    "y": 3,
+    "y-roads": [1,2]
+}
 # This has 4 intersections at (1,1), (1,2), (3,1) and (3,2)
 # We may add number of lanes per road at a later time
