@@ -18,6 +18,8 @@ class Card(Enum):
     W = 4
 
 class Car:
+    # needs to have
+
     def __init__(self):
         pass
 
@@ -29,13 +31,19 @@ class Intersection:
     # if so, send car to intersection, which will either pass it forward or turn
     # it at the next time step
 
-
     def __init__(self, x_roads, y_roads, location):
         self.x_roads = x_roads
         self.y_roads = y_roads
         self.x_location = location[0]
         self.y_location = location[1]
 
+    def handle_car(self, car):
+        # returns false if the light is red, or it cannot put the car in the
+        # desired location (i.e. the car is stuck at the intersection).
+        # returns true if the car successfully makes it through the intersection
+        # This function is responsible for moving cars to their correct location
+        # if they can be moved
+        return False
 
 
 class CarSpawn:
@@ -54,11 +62,46 @@ class Road:
     def add_intersection(self, intersection, location) :
         self.road[location] = intersection
 
+    def get_next_position(self, location):
+        #  returns None, a Car object or an Intersection object
+        if location+1 >= len(self.road):
+            return None
+        return self.road[location+1]
+
+    def advance_car(self, location):
+        car = self.road[location]
+        assert type(car) == Car, "Attempt to move non-car object"
+        next_obj = self.get_next_position(location)
+        if next_obj is None:
+            self.road[location] = None
+            if location+1 >= len(self.road):
+                # end of the road, just remove
+                return None
+            else:
+                # move to next space
+                self.road[location+1] = car
+                return location+1
+
+        elif type(next_obj) == Intersection:
+            # TODO car at intersection
+            """
+            b = next_obj.handle_car(car)
+            # handle_car should put it where it should go
+            if b:
+                self.road[location] = None
+
+            """
+
+            assert False
+
+        else:
+            # cannot move - car in front
+            return location
 
 class Map:
 
     def __init__(self, parsed_map):
-        # parsed_map: dictionary, with block_size
+        # parsed_map: dictionary, with block_size; parsed map file
         # roads: array of tuples: first going east or south, second going north or west
         # x-roads: horizontal (use vertical axis for location)
         # y-roads: vertical (use horizontal axis for location)
@@ -95,6 +138,7 @@ class Map:
                 self.y_roads[y][1].add_intersection(i,y_locations[1])
 
         # set location in road's array to contain intersection
+        # TODO
 
 
 
