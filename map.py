@@ -12,10 +12,10 @@ import parser
 
 class Card(Enum):
     # Cardinal direction the cars are traveling towards
-    S = 1
-    E = 2
-    N = 3
-    W = 4
+    S = "South"
+    E = "East"
+    N = "North"
+    W = "West"
 
 class Car:
     # needs to have
@@ -30,6 +30,8 @@ class Intersection:
     # check to see if intersection can handle car (i.e. has space)
     # if so, send car to intersection, which will either pass it forward or turn
     # it at the next time step
+
+    # TODO: add turning probabilities later on IN INTERSECTION
 
     def __init__(self, x_roads, y_roads, location):
         self.x_roads = x_roads
@@ -49,14 +51,21 @@ class Intersection:
 class CarSpawn:
     # at start of each road, responsible for creating and adding new cars to the
     # road according to given procedure
-    def __init__(self):
-        pass
+    def __init__(self, spawn_times):
+        self.queue = []
+        self.spawn_times = spawn_times
+
+
+    def time_step(self, step):
+
+
 
 class Road:
 
-    def __init__(self, length, card):
+    def __init__(self, length, card, spawn_times):
         self.road = [None] * length
         self.card = card
+        self.spawner = CarSpawn(spawn_times)
 
     # location is index to add intersection at
     def add_intersection(self, intersection, location) :
@@ -100,7 +109,7 @@ class Road:
 
 class Map:
 
-    def __init__(self, parsed_map):
+    def __init__(self, parsed_map, parsed_traffic):
         # parsed_map: dictionary, with block_size; parsed map file
         # roads: array of tuples: first going east or south, second going north or west
         # x-roads: horizontal (use vertical axis for location)
@@ -142,8 +151,9 @@ class Map:
 
 
 
-p = parser.parse("samplelayout.txt")
-m = Map(p)
+p = parser.parse("samplelayout.json")
+t = parser.Traffic("sampletraffic.json", p)
+m = Map(p, t)
 
 
     # def west_green():

@@ -19,7 +19,7 @@ We have a second text file containing traffic information relating to the layout
 (TBD: data for each intersection or for each car spawning at any given entrance).
 We randomly choose times to spawn cars at the start of each road, and at each
 intersection have a specified chance for each car to turn in any of the three
-other directions.
+other directions (TODO: determine if this is car or intersection job).
 
 ## Traffic Light Behavior
 constants (adjustable as needed)\\
