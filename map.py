@@ -6,14 +6,28 @@ instructions for each car as it reaches the intersection. These behaviors are
 parsed from the behavior text file, and are specific for a particular layout.
 """
 
+import random
 from util import Card
 import parser
 
+# seed for randomness for testing
+random.seed("start")
+
 class Car:
-    # needs to have
+    # needs to know when it's created and when it's destroyed
+    # keep track of number of seconds that the car's movement is blocked,
+    # when it is destroyed at the end of a road, add that waiting time to a total
+    # and add 1 to the number of cars done, to find the average wait time per car.
 
     def __init__(self):
-        pass
+        self.waiting_steps = 0
+        self.random_dir = random.random()
+
+    def rerandomize(self):
+        self.random_dir = random.random()
+
+
+
 
 class Intersection:
 
@@ -33,10 +47,14 @@ class Intersection:
 
     def handle_car(self, car):
         # returns false if the light is red, or it cannot put the car in the
-        # desired location (i.e. the car is stuck at the intersection).
-        # returns true if the car successfully makes it through the intersection
+        # desired location (i.e. the car is stuck at the intersection), and
+        # increases wait time.
+        # Rerandomizes the car and returns true if the car successfully makes it
+        # through the intersection.
         # This function is responsible for moving cars to their correct location
         # if they can be moved
+
+        # TODO
         return False
 
 
