@@ -52,7 +52,7 @@ class Flow :
             assert "pattern" in data
             data = data["pattern"]
             self.intersections[intersection] = data
-    
+
     def getDirectionDistribution(self, intersection, direction) :
         assert type(intersection) == tuple and len(intersection) == 2, \
                 "Badly formed intersection \"{}\" in call to getDirectionDistribution".format(intersection)
@@ -89,8 +89,8 @@ class Traffic:
 
     def get_traffic_data(self, xy, road_num, card):
         # will return an array of dicts, each representing one time period
-        return self.road_spawns[xy][road_num][card]
+        return self.road_spawns[xy][road_num][card.value]
 
 t = Traffic("sampletraffic.json", "samplelayout.json")
-print(t.get_traffic_data("x",1,"East"))
-print(t.get_traffic_data("x",1,"West"))
+print(t.get_traffic_data("x",1,Card.E))
+print(t.get_traffic_data("x",1,Card.W))
