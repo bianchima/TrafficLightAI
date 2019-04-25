@@ -53,7 +53,6 @@ class CarSpawn:
 
 
 class Road:
-
     def __init__(self, length, card, spawn_times):
         self.road = [None] * length
         self.card = card
@@ -101,7 +100,10 @@ class Road:
 
 class Map:
 
-    def __init__(self, parsed_map, parsed_traffic):
+    #def __init__(self, parsed_map, parsed_traffic):
+
+    def __init__(self, traffic):
+
         # parsed_map: dictionary, with block_size; parsed map file
         # roads: array of tuples: first going east or south, second going north or west
         # x-roads: horizontal (use vertical axis for location)
@@ -109,18 +111,25 @@ class Map:
         self.x_roads = {} # {1 : (<East road>, <West road>), 2:  ...}
         self.y_roads = {} # {1 : (<South road>, <North road>), 2:  ...}
 
+        parsed_map = traffic.parsed_map
+        parsed_traffic = traffic.parsed_traffic
+
+        print(parsed_map)
+        print(parsed_map["x"])
+
         self.block_size = parsed_map["block_size"]
 
         # Create Roads
         x_length = self.block_size * parsed_map["y"] + 1 # +1 makes opposite directions on multiples of block_size
         for x in parsed_map["x-roads"]:
             # move to Road class
-            self.x_roads[x] = (Road(x_length, Card.E, None), Road(x_length, Card.W, None))
-
+            # self.x_roads[x] = (Road(x_length, Card.E, {}), Road(x_length, Card.W, {})) # TODO Add spawn times
+            self.x_roads[x] = (Road(x_length, Card.E, traffic.get_traffic_data("x", x,"East")),
+                               Road(x_length, Card.W, traffic.get_traffic_data("x", x,"West"))) # TODO Add spawn times
         y_length = self.block_size * parsed_map["x"] + 1
         for y in parsed_map["y-roads"]:
-            self.y_roads[y] = (Road(y_length, Card.S, None), Road(y_length, Card.N, None))
-
+            self.y_roads[y] = (Road(y_length, Card.S, traffic.get_traffic_data("y", y, "South")),
+                               Road(y_length, Card.N, traffic.get_traffic_data("y", y, "North")))
         # Add Intersections
 
         # create intersection with Roads
@@ -141,16 +150,6 @@ class Map:
 
 
 p = parser.parse("samplelayout.json")
-t = parser.Traffic("sampletraffic.json", p)
+t = parser.Traffic("sampletraffic.json", "samplelayout.json")
 f = parser.Flow(p)
-m = Map(p, t)
-
-
-    # def west_green():
-    #
-    # def east_green():
-    #
-    # def north_green():
-    #
-    # def south_green():
-    #
+m = Map(t)

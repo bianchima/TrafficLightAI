@@ -68,9 +68,29 @@ class Flow :
 
 class Traffic:
     # TODO Matthew
-    def __init__(self, filename, parsed_map):
-        pass
+    def __init__(self, traffic_file, map_file):
+        # Access via roads["x"][1]["East"], for example
 
-    def get_traffic_data(self, road_num, xy, card):
+        self.road_spawns = {}
+        self.road_spawns["x"] = {}
+        self.road_spawns["y"] = {}
+
+        t = parse(traffic_file)
+        m = parse(map_file)
+
+        self.parsed_traffic = t
+        self.parsed_map = m
+
+        for i in t:
+            r = i["road"]
+            d = i["direction"]
+            self.road_spawns[d][r] = i["rates"]
+
+
+    def get_traffic_data(self, xy, road_num, card):
         # will return an array of dicts, each representing one time period
-        pass
+        return self.road_spawns[xy][road_num][card]
+
+t = Traffic("sampletraffic.json", "samplelayout.json")
+print(t.get_traffic_data("x",1,"East"))
+print(t.get_traffic_data("x",1,"West"))
