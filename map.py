@@ -6,16 +6,8 @@ instructions for each car as it reaches the intersection. These behaviors are
 parsed from the behavior text file, and are specific for a particular layout.
 """
 
-from enum import Enum
-
+from util import Card
 import parser
-
-class Card(Enum):
-    # Cardinal direction the cars are traveling towards
-    S = "South"
-    E = "East"
-    N = "North"
-    W = "West"
 
 class Car:
     # needs to have
@@ -57,7 +49,7 @@ class CarSpawn:
 
 
     def time_step(self, step):
-
+        pass
 
 
 class Road:
@@ -117,20 +109,17 @@ class Map:
         self.x_roads = {} # {1 : (<East road>, <West road>), 2:  ...}
         self.y_roads = {} # {1 : (<South road>, <North road>), 2:  ...}
 
-        print(parsed_map)
-        print(parsed_map["x"])
-
         self.block_size = parsed_map["block_size"]
 
         # Create Roads
         x_length = self.block_size * parsed_map["y"] + 1 # +1 makes opposite directions on multiples of block_size
         for x in parsed_map["x-roads"]:
             # move to Road class
-            self.x_roads[x] = (Road(x_length, Card.E), Road(x_length, Card.W))
+            self.x_roads[x] = (Road(x_length, Card.E, None), Road(x_length, Card.W, None))
 
         y_length = self.block_size * parsed_map["x"] + 1
         for y in parsed_map["y-roads"]:
-            self.y_roads[y] = (Road(y_length, Card.S), Road(y_length, Card.N))
+            self.y_roads[y] = (Road(y_length, Card.S, None), Road(y_length, Card.N, None))
 
         # Add Intersections
 
@@ -153,6 +142,7 @@ class Map:
 
 p = parser.parse("samplelayout.json")
 t = parser.Traffic("sampletraffic.json", p)
+f = parser.Flow(p)
 m = Map(p, t)
 
 
