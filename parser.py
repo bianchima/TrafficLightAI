@@ -2,6 +2,8 @@ import json
 import itertools
 from util import Card
 
+# TODO: add overall start and end time to one of the json files
+
 def parse(filename) :
     file = open(filename, 'r')
     text = ""
@@ -64,7 +66,7 @@ class Flow :
                 "Data for intersection {} does not contain {} direction".format(intersection, direction)
         assert set(self.intersections[intersection][direction.value].keys()) == set([d.value for d in self.directionPairs[direction]]), \
                 "Data for intersection {} and direction {} had invalid keyset".format(intersection, direction.value)
-        return self.intersections[intersection][direction.value]
+        return {Card(key): v for key, v in self.intersections[intersection][direction.value].items()}
 
 class Traffic:
     # TODO Matthew
@@ -91,6 +93,6 @@ class Traffic:
         # will return an array of dicts, each representing one time period
         return self.road_spawns[xy][road_num][card.value]
 
-t = Traffic("sampletraffic.json", "samplelayout.json")
-print(t.get_traffic_data("x",1,Card.E))
-print(t.get_traffic_data("x",1,Card.W))
+# t = Traffic("sampletraffic.json", "samplelayout.json")
+# print(t.get_traffic_data("x",1,Card.E))
+# print(t.get_traffic_data("x",1,Card.W))

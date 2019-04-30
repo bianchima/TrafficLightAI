@@ -35,16 +35,6 @@ validPairs = {
     WN: {WW, WS, SW, EE, ES, NE, SS, SE, NW}
 }
 
-# print(validPairs[NW])
-# print(validPairs[SE])
-# print(validPairs[EN])
-# print(validPairs[WS])
-# print("\n")
-# print(validPairs[NE])
-# print(validPairs[SW])
-# print(validPairs[ES])
-# print(validPairs[WN])
-
 all_pairs = []
 valid_pairs = []
 
@@ -64,8 +54,6 @@ for x in all_pairs:
     if flag:
         valid_pairs.append(x)
 
-# print valid_pairs
-
 unique_pairs = []
 
 for x in valid_pairs:
@@ -78,16 +66,28 @@ for x in valid_pairs:
                 flag = False
     if flag:
         unique_pairs.append(x)
-for p in unique_pairs :
-    print p
-print len(unique_pairs)
 
 
+def get_intersection_states():
+    return unique_pairs
+
+print get_intersection_states()
 
 
-
-
-"""
-all rights are NE, WN, SW, ES, this should work
-
-"""
+#[('EN', 'SW', 'NE', 'WS'),
+# ('EN', 'SW', 'NE', 'ES'),
+# ('EN', 'SW', 'EE', 'ES'),
+# ('NN', 'SS', 'SW', 'NE'), 
+# ('NN', 'SW', 'NE', 'ES'),
+# ('NN', 'NE', 'ES', 'NW'),
+# ('SS', 'WN', 'SW', 'NE'),
+# ('SS', 'WN', 'SW', 'SE'),
+# ('WN', 'SW', 'NE', 'WS'),
+# ('WN', 'SW', 'NE', 'ES'),
+# ('WN', 'SW', 'EE', 'ES'),
+# ('WN', 'SW', 'ES', 'SE'),
+# ('WN', 'NE', 'WW', 'WS'),
+# ('WN', 'NE', 'WW', 'ES'),
+# ('WN', 'NE', 'ES', 'NW'),
+# ('WN', 'WW', 'EE', 'ES'),
+# ('WN', 'ES', 'SE', 'NW')]
