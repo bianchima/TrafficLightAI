@@ -202,6 +202,7 @@ class Map:
 
         self.flow = flow
 
+        self.parsed_map = traffic.parsed_map
         parsed_map = traffic.parsed_map
         parsed_traffic = traffic.parsed_traffic
 
@@ -247,6 +248,30 @@ class Map:
 
         # TODO
 
+    def get_block_size(self) :
+        return self.parsed_map['block_size']
+
+    def get_size(self) :
+        """
+            Returns the dimension of the map in blocks
+        """
+        block_size = self.get_block_size()
+        x, y = self.parsed_map['x'], self.parsed_map['y']
+        return (x * block_size, y * block_size)
+
+    def get_road_locations(self) :
+        """
+            Returns a tuple of lists representing the locations of the 
+            x and y roads in terms of block coordinates 
+            (ie. x-roads * blockSize)
+        """
+        block_size = self.parsed_map['block_size']
+        xr, yr = self.parsed_map['x-roads'], self.parsed_map['y-roads']
+        xr = [x * block_size for x in xr]
+        yr = [y * block_size for y in yr]
+        return (xr, yr)
+
+    
 
 
 p = parser.parse("samplelayout.json")
