@@ -17,7 +17,7 @@ import parser
 random.seed("start")
 
 
-class Car:
+class Car(object):
     # needs to know when it's created and when it's destroyed
     # keep track of number of seconds that the car's movement is blocked,
     # when it is destroyed at the end of a road, add that waiting time to a total
@@ -26,6 +26,8 @@ class Car:
     def __init__(self):
         self.waiting_steps = 0
         self.random_dir = random.random()
+        self.road = None
+        self.road_index = None
 
     def get_random(self):
         return self.random_dir
@@ -33,8 +35,15 @@ class Car:
     def rerandomize(self):
         self.random_dir = random.random()
 
+    def set_road(self, road, road_index):
+        self.road = road
+        self.road_index = road_index
 
-class Intersection:
+    def move_car(self):
+        self.road_index += 1
+
+
+class Intersection(object):
 
     # car behavior at intersections:
     # if light is green and car would move onto intersection at road,
@@ -67,11 +76,13 @@ class Intersection:
 
         # flow.getDirectionDistribution(self, Card.#)
 
-    # TODO: simulation file creates map, responsible for changing states
     def set_state(self, new_state):
         self.state = new_state
 
-    def handle_car(self, car, card):
+    def get_global_location(self):
+        return self.global_location
+
+    def handle_car(self, car, card, last=False):
         # returns false if the light is red, or it cannot put the car in the
         # desired location (i.e. the car is stuck at the intersection), and
         # increases wait time.
@@ -92,13 +103,18 @@ class Intersection:
                 self.roads[target].road[self.road_location[target]+1] = car
                 # remove old car
                 self.roads[card].road[self.road_location[card]-1] = None
+                car.set_road(self.roads[target], self.road_location[target]+1)
                 car.rerandomize()
                 return True
             else:
                 # There is a car blocking
+                if last:
+                    car.waiting_steps += 1
                 return False
 
         # Light is red
+        if last:
+            car.waiting_steps += 1
         return False
 
     def choose_direction(self, car, probs):
@@ -115,7 +131,7 @@ class Intersection:
         return None
 
 
-class CarSpawn:
+class CarSpawn(object):
     # at start of each road, responsible for creating and adding new cars to the
     # road according to given procedure
     def __init__(self, road, spawn_times):
@@ -125,33 +141,44 @@ class CarSpawn:
         for i in spawn_times:
             self.times.update( set(range(i['start'], i['end'], i['rate'])) )
 
-    def time_step(self, step):
-        # TODO: Cars stuck inside CarSpawn are waiting too!
-        # TODO
 
+    def time_step(self, step):
         # Every time step, if need to create a car, create one and add to end of "queue"
         # Then, if there is space, move the first one from the "queue" onto the road.
         ## If there is not space, increment the waiting time for every car in the queue by 1
         ### Is this here or outside?
+        print step
 
         if step in self.times:
+            # c = Car()
+            # print "instance: {}".format(isinstance(c, Car))
+            # print "C type: {}".format(type(c))
             self.queue.append(Car())
+            # print "length: {}".format(len(self.queue))
+            # print "type: {}".format(type(self.queue[0]))
         if len(self.queue) != 0:
-            if road.road[0] == None:
-                road.road[0] = self.queue.pop(0)
+            # BUG: car is not a Car object! Should be fixed
+            if self.road.road[0] == None:
+                # print ("Road is empty")
+                # print type(self.road.road[0])
+                self.road.road[0] = self.queue.pop(0)
+                self.road.road[0].set_road(self.road, 0)
+
+                # print self.road.road[0]
             else:
                 for c in self.queue:
                     # Handling waiting steps in spawners here, since they're not on the road
-                    # TODO Do we want to do this here or outside?
                     c.waiting_steps += 1
 
 
 
-class Road:
-    def __init__(self, length, card, spawn_times):
+class Road(object):
+    def __init__(self, length, card, spawn_times, global_loc):
+        # self.length = length
         self.road = [None] * length
         self.card = card
         self.spawner = CarSpawn(self, spawn_times)
+        self.global_loc = global_loc
 
     # location is index to add intersection at
     def add_intersection(self, intersection, location) :
@@ -163,7 +190,7 @@ class Road:
             return None
         return self.road[location+1]
 
-    def advance_car(self, location):
+    def advance_car(self, location, last=False):
         car = self.road[location]
         assert type(car) == Car, "Attempt to move non-car object"
         next_obj = self.get_next_position(location)
@@ -175,19 +202,22 @@ class Road:
             else:
                 # nothing in front, move to next space
                 self.road[location+1] = car
+                car.move_car()
                 return True
 
         elif type(next_obj) == Intersection:
-            b = next_obj.handle_car(car, self.card)
+            b = next_obj.handle_car(car, self.card, last)
             # handle_car should put it where it should go
             # TODO: keep track of time waiting for cars
             return b
 
         else:
             # cannot move - car in front
+            if last:
+                car.waiting_steps += 1
             return False
 
-class Map:
+class Map(object):
 
     #def __init__(self, parsed_map, parsed_traffic):
 
@@ -215,15 +245,16 @@ class Map:
         x_length = self.block_size * parsed_map["y"] + 1 # +1 makes both directions on multiples of block_size
         for x in parsed_map["x-roads"]:
             # move to Road class
-            # self.x_roads[x] = (Road(x_length, Card.E, {}), Road(x_length, Card.W, {})) # TODO Add spawn times
-            self.x_roads[x] = (Road(x_length, Card.E, traffic.get_traffic_data("x", x, Card.E)),
-                               Road(x_length, Card.W, traffic.get_traffic_data("x", x, Card.W))) # TODO Add spawn times
+            self.x_roads[x] = (Road(x_length, Card.E, traffic.get_traffic_data("x", x, Card.E), x),
+                               Road(x_length, Card.W, traffic.get_traffic_data("x", x, Card.W), x))
         y_length = self.block_size * parsed_map["x"] + 1
         for y in parsed_map["y-roads"]:
-            self.y_roads[y] = (Road(y_length, Card.S, traffic.get_traffic_data("y", y, Card.S)),
-                               Road(y_length, Card.N, traffic.get_traffic_data("y", y, Card.N)))
+            self.y_roads[y] = (Road(y_length, Card.S, traffic.get_traffic_data("y", y, Card.S), y),
+                               Road(y_length, Card.N, traffic.get_traffic_data("y", y, Card.N), y))
 
         # Add Intersections
+
+        self.intersections = []
 
         # create intersection with Roads
         # TODO: debug and check
@@ -232,6 +263,7 @@ class Map:
                 x_locations = (self.block_size*y, x_length - 1 - (self.block_size*y))
                 y_locations = (self.block_size*x, y_length - 1 - (self.block_size*x))
                 i = Intersection(self.x_roads[x], self.y_roads[y], (x_locations, y_locations), (x,y), self.flow)
+                self.intersections.append(i)
                 self.x_roads[x][0].add_intersection(i,x_locations[0])
                 self.x_roads[x][1].add_intersection(i,x_locations[1])
                 self.y_roads[y][0].add_intersection(i,y_locations[0])
@@ -246,8 +278,6 @@ class Map:
                 # print direction
                 # print "\n\n"
 
-        # TODO
-
     def get_block_size(self) :
         return self.parsed_map['block_size']
 
@@ -261,8 +291,8 @@ class Map:
 
     def get_road_locations(self) :
         """
-            Returns a tuple of lists representing the locations of the 
-            x and y roads in terms of block coordinates 
+            Returns a tuple of lists representing the locations of the
+            x and y roads in terms of block coordinates
             (ie. x-roads * blockSize)
         """
         block_size = self.parsed_map['block_size']
@@ -271,12 +301,15 @@ class Map:
         yr = [y * block_size for y in yr]
         return (xr, yr)
 
-    
+    def get_intersections(self):
+        return self.intersections
+
+
 
 
 p = parser.parse("samplelayout.json")
 t = parser.Traffic("sampletraffic.json", "samplelayout.json")
 f = parser.Flow(p)
 m = Map(t, f)
-
+print m.get_intersections()
 # print util.intersection_states

@@ -1,6 +1,9 @@
-from graphics import *
 import map
+import parser
+from simulation_graphics import SimulationWindow
 from util import Card
+import util
+import random
 
 ################################################################
 ########################### Simulation #########################
@@ -8,141 +11,98 @@ from util import Card
 
 # TODO: All of the time step and execution code
 
+p = parser.parse("samplelayout.json")
+t = parser.Traffic("sampletraffic.json", "samplelayout.json")
+f = parser.Flow(p)
+
+light_min_time = 5
+
 class Simulation :
 
-    def __init__(self):
+    def __init__(self, traffic_pattern, graphics=False):
         # TODO:
-        pass
+        # store the traffic pattern
+        # traffic_pattern structure: dictionary with keys as the intersection [x_road, y_road]
+        # and value of a list of integers representing the index of the traffic pattern
+        # in util.intersection_states at that time step
+        # in order intersections are created in map.py
+
+        # parse the files
+        # create a map
+
+        self.current_time = 0
+
+        self.map = map.Map(t, f)
+        self.traffic_pattern = traffic_pattern
+        self.intersections = self.map.get_intersections()
+        if graphics :
+            self.simulationWindow = SimulationWindow(self.map, self)
+        else :
+            self.simulationWindow = None
+
+
+    def stepTime(self):
+        # step forward in time
+        x = self.current_time % light_min_time
+        y = self.current_time / light_min_time
+        if x == 0:
+            for i in self.intersections:
+                i.set_state(self.traffic_pattern[i.get_global_location()][y])
+
+        # move cars
+        x_roads = self.map.x_roads
+        y_roads = self.map.y_roads
+        roads = [x_roads[k] for k in x_roads] + [y_roads[k] for k in y_roads]
+        all_cars = set()
+        moved_cars = set()
+        for i in range(len(self.intersections)) :
+            for roadPair in roads : # roadPairs is a tuple of two road
+                for road in roadPair :
+                    array = road.road
+                    iterable = range(len(array))
+                    iterable.reverse()
+                    for pos in iterable :
+                        car = array[pos]
+                        if type(car) == map.Car and car not in moved_cars:
+                            all_cars.add(car)
+                            moved = road.advance_car(pos, i == len(self.intersections) - 1)
+                            if moved :
+                                moved_cars.add(car)
+        print("{} cars on all road".format(len(all_cars)))
+
+        for roadPair in roads : # roadPairs is a tuple of two road
+            for road in roadPair :
+                road.spawner.time_step(self.current_time)
+
+        self.current_time += 1
+
+        if self.simulationWindow is not None :
+            car_info = []
+            for car in all_cars :
+                roadNum = len(car.road.road) * self.map.get_block_size()
+                roadDir = car.road.card
+                location = car.road_index
+                car_info.append((roadNum, roadDir, location))
+            self.simulationWindow.undrawCars()
+            self.simulationWindow.drawCars(car_info)
+            self.simulationWindow.update()
+
+
+        # TODO: issues:
+        # graphics not updating
+        # only 6 cars spawn at a time, should be 8 because 8 spawners
+        # cars are not removing? not sure if reaching end or not
+        # what algorithm are we using? Cars might be stuck, easier to debug with
+        #  graphics
 
 
 
-
-################################################################
-############################ Graphics ##########################
-################################################################
-
-BLOCK_PIXELS = 10 # Number of pixels per block
-CAR_RADIUS = 4
-CAR_ROAD_OFFSET = 0.3
-DIRECTION_COLORS = {
-    Card.N : "salmon",
-    Card.S : "red",
-    Card.E : "blue",
-    Card.W : "cyan",
-}
-
-class SimulationWindow :
-
-    def getXPixelCoord(self, blockX) :
-        return int((blockX + 0.5) / self.blockDimensions[0] * self.width)
-
-    def getYPixelCoord(self, blockY) :
-        return int((blockY + 0.5) / self.blockDimensions[1] * self.height)
-
-    def getPixelCoord(self, blockX, blockY) :
-        xp = self.getXPixelCoord(blockX)
-        yp = self.getYPixelCoord(blockY)
-        return Point(int(xp), int(yp))
-
-    def draw(self, drawable) :
-        drawable.draw(self.window)
-
-    def __init__(self, map, simulation) :
-        """
-            Takes a map object which contains all of the information
-            about the layout and object positions and a simulation
-            object which contains car waiting times 
-            TODO: May not need to pass in simulation if we don't render
-                that information
-        """
-        self.roads = map.get_road_locations()
-        self.blockDimensions = map.get_size()
-        self.width = self.blockDimensions[0] * BLOCK_PIXELS
-        self.height = self.blockDimensions[1] * BLOCK_PIXELS
-        self.blockSize = map.get_block_size()
-        self.window = GraphWin("Traffic Light Simulation", self.width, self.height, autoflush=False)
-        self.window.setBackground("white")
-        for xRoad in self.roads[0] :
-            start = self.getPixelCoord(0, xRoad)
-            end = self.getPixelCoord(self.blockDimensions[0]-1, xRoad)
-            self.draw(Line(start, end))
-        for yRoad in self.roads[1] :
-            start = self.getPixelCoord(yRoad, 0)
-            end = self.getPixelCoord(yRoad, self.blockDimensions[1]-1)
-            self.draw(Line(start, end))
-        self.drawnCars = []
-        # TODO: remove
-        # self.window.getMouse() # pause till clicked
-
-    def drawCars(self, carLocations) :
-        """
-            takes in an iterable of the form
-            {(road#, roadDirection, positionOnRoad), ...}
-            where :
-                road# is the y axis of an x-road or x axis of a y-road
-                    measured in block coordinates
-                roadDirection is the direction of road the car is on
-                poisitionOnRoad is the index in which the car is
-                    located on the corresponding road
-        """
-        # carInfo is a list of [(blockLocation, direction), ...]
-        # where blockLocation is (x,y) in block coordinates
-        carInfo = []
-        xLen, yLen = self.blockDimensions
-        for roadNum, roadDir, position in carLocations :
-            blockLocation = None
-            if roadDir == Card.E : # x-road
-                blockLocation = self.getPixelCoord(position, roadNum + CAR_ROAD_OFFSET)
-            elif roadDir == Card.W : # x-road
-                blockLocation = self.getPixelCoord(xLen - position, roadNum - CAR_ROAD_OFFSET)
-            elif roadDir == Card.N : # y-road
-                blockLocation = self.getPixelCoord(roadNum + CAR_ROAD_OFFSET, yLen - position)
-            elif roadDir == Card.S : # y-road
-                blockLocation = self.getPixelCoord(roadNum - CAR_ROAD_OFFSET, position)
-            carInfo.append((Circle(blockLocation, CAR_RADIUS), roadDir))
-        
-        for car, direction in carInfo:
-            car.setFill(DIRECTION_COLORS[direction])
-            self.draw(car)
-        self.drawnCars += [car for car, dir in carInfo]
-
-    def update(self) :
-        self.window.update()
-
-    def undrawCars(self) :
-        for car in self.drawnCars :
-            car.undraw()
-        self.drawnCars = []
+pattern = {}
+for i in [(1,1), (1,2), (3,1), (3,2)] :
+    pattern[i] = []
+    for q in range(400 / 5) :
+        pattern[i].append(random.randint(0,17))
 
 
-
-        
-
-sw = SimulationWindow(map.m, None)
-
-
-#testing TODO: Remove
-def testDraw() :
-    cars = [
-        (15, Card.W, 13),
-        (15, Card.W, 4),
-        (15, Card.W, 1),
-        (15, Card.W, 0),
-        (15, Card.E, 0),
-        (15, Card.E, 14),
-        (15, Card.W, 29),
-        (15, Card.W, 31),
-        (15, Card.E, 16),
-        (15, Card.S, 14),
-        (15, Card.S, 16),
-        (15, Card.N, 44),
-        (15, Card.N, 46),
-        (15, Card.N, 23),
-        (15, Card.S, 19),
-        (30, Card.S, 19),
-        (30, Card.S, 35),
-        (15, Card.E, 28),
-        (45, Card.E, 28),
-        (45, Card.E, 28)
-    ]
-    sw.drawCars(cars)
+s = Simulation(pattern, True)
+s.stepTime()
