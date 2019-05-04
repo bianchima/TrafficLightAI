@@ -91,7 +91,7 @@ class Intersection(object):
         # This function is responsible for moving cars to their correct location
         # if they can be moved
 
-        probs = self.flow.getDirecitonDistribution(self.global_locations, card)
+        probs = self.flow.getDirectionDistribution(self.global_location, card)
         target = self.choose_direction(car, probs)
 
         path = (card, target)
@@ -147,7 +147,6 @@ class CarSpawn(object):
         # Then, if there is space, move the first one from the "queue" onto the road.
         ## If there is not space, increment the waiting time for every car in the queue by 1
         ### Is this here or outside?
-        print step
 
         if step in self.times:
             # c = Car()
@@ -242,12 +241,12 @@ class Map(object):
         self.block_size = parsed_map["block_size"]
 
         # Create Roads
-        x_length = self.block_size * parsed_map["y"] + 1 # +1 makes both directions on multiples of block_size
+        x_length = self.block_size * parsed_map["x"] + 1 # +1 makes both directions on multiples of block_size
         for x in parsed_map["x-roads"]:
             # move to Road class
             self.x_roads[x] = (Road(x_length, Card.E, traffic.get_traffic_data("x", x, Card.E), x),
                                Road(x_length, Card.W, traffic.get_traffic_data("x", x, Card.W), x))
-        y_length = self.block_size * parsed_map["x"] + 1
+        y_length = self.block_size * parsed_map["y"] + 1
         for y in parsed_map["y-roads"]:
             self.y_roads[y] = (Road(y_length, Card.S, traffic.get_traffic_data("y", y, Card.S), y),
                                Road(y_length, Card.N, traffic.get_traffic_data("y", y, Card.N), y))
@@ -311,5 +310,4 @@ p = parser.parse("samplelayout.json")
 t = parser.Traffic("sampletraffic.json", "samplelayout.json")
 f = parser.Flow(p)
 m = Map(t, f)
-print m.get_intersections()
 # print util.intersection_states

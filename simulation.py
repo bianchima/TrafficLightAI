@@ -5,6 +5,8 @@ from util import Card
 import util
 import random
 
+random.seed("LOLZ") # TODO: Remove seed
+
 ################################################################
 ########################### Simulation #########################
 ################################################################
@@ -15,7 +17,7 @@ p = parser.parse("samplelayout.json")
 t = parser.Traffic("sampletraffic.json", "samplelayout.json")
 f = parser.Flow(p)
 
-light_min_time = 5
+light_min_time = 10
 
 class Simulation :
 
@@ -47,7 +49,13 @@ class Simulation :
         y = self.current_time / light_min_time
         if x == 0:
             for i in self.intersections:
-                i.set_state(self.traffic_pattern[i.get_global_location()][y])
+                lightPattern = self.traffic_pattern[i.get_global_location()]
+                if y < len(lightPattern) :
+                    i.set_state(lightPattern[y])
+                else :
+                    # TODO : What to do at end of simulation
+                    return False # No time stepped
+
 
         # move cars
         x_roads = self.map.x_roads
@@ -68,7 +76,6 @@ class Simulation :
                             moved = road.advance_car(pos, i == len(self.intersections) - 1)
                             if moved :
                                 moved_cars.add(car)
-        print("{} cars on all road".format(len(all_cars)))
 
         for roadPair in roads : # roadPairs is a tuple of two road
             for road in roadPair :
@@ -79,21 +86,19 @@ class Simulation :
         if self.simulationWindow is not None :
             car_info = []
             for car in all_cars :
-                roadNum = len(car.road.road) * self.map.get_block_size()
+                roadNum = car.road.global_loc * self.map.get_block_size()
                 roadDir = car.road.card
                 location = car.road_index
                 car_info.append((roadNum, roadDir, location))
             self.simulationWindow.undrawCars()
             self.simulationWindow.drawCars(car_info)
             self.simulationWindow.update()
+        
+        # TODO:
+        #  what algorithm are we using? Cars might be stuck, easier to debug with
+        # graphics
 
-
-        # TODO: issues:
-        # graphics not updating
-        # only 6 cars spawn at a time, should be 8 because 8 spawners
-        # cars are not removing? not sure if reaching end or not
-        # what algorithm are we using? Cars might be stuck, easier to debug with
-        #  graphics
+        return True # sucess
 
 
 
@@ -101,8 +106,13 @@ pattern = {}
 for i in [(1,1), (1,2), (3,1), (3,2)] :
     pattern[i] = []
     for q in range(400 / 5) :
-        pattern[i].append(random.randint(0,17))
+        pattern[i].append(random.randint(0,16))
 
 
 s = Simulation(pattern, True)
-s.stepTime()
+
+import time
+time.sleep(4)
+while s.stepTime() :
+    time.sleep(0.1)
+
