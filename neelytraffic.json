@@ -1,0 +1,168 @@
+# start times inclusive, end times exclusive
+# intersection specified by [x,y]
+{
+  "simulation_length" : 400,
+  "road_rates" : [
+      {
+          "road" : 1,
+          "direction" : "y",
+          "rates" :
+          {
+            "North" :
+                [
+                    { "start": 0  , "end" : 100, "rate" : 15  },
+                    { "start": 100, "end" : 250, "rate" : 3   },
+                    { "start": 250, "end" : 300, "rate" : 10  },
+                    { "start": 300, "end" : 570, "rate" : 15  },
+                    { "start": 570, "end" : 600, "rate" : 100   }
+                ],
+            "South" :
+                [
+                    { "start": 0  , "end" : 100, "rate" : 15  },
+                    { "start": 100, "end" : 250, "rate" : 15   },
+                    { "start": 250, "end" : 300, "rate" : 10  },
+                    { "start": 300, "end" : 570, "rate" : 3  },
+                    { "start": 570, "end" : 600, "rate" : 100   }
+                ]
+        }
+      },
+      {
+        "road" : 2,
+        "direction" : "y",
+        "rates" :
+        {
+          "North" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 12   },
+                  { "start": 250, "end" : 300, "rate" : 15  },
+                  { "start": 300, "end" : 570, "rate" : 10  },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ],
+          "South" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 10   },
+                  { "start": 250, "end" : 300, "rate" : 15  },
+                  { "start": 300, "end" : 570, "rate" : 12   },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ]
+        }
+      },
+      {
+        "road" : 5,
+        "direction" : "y",
+        "rates" :
+        {
+          "North" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 25  },
+                  { "start": 100, "end" : 250, "rate" : 15   },
+                  { "start": 250, "end" : 300, "rate" : 20  },
+                  { "start": 300, "end" : 570, "rate" : 15  },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ],
+          "South" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 25  },
+                  { "start": 100, "end" : 250, "rate" : 17   },
+                  { "start": 250, "end" : 300, "rate" : 20  },
+                  { "start": 300, "end" : 570, "rate" : 4   },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ]
+        }
+      },
+      {
+        "road" : 1,
+        "direction" : "x",
+        "rates" :
+        {
+          "East" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 5   },
+                  { "start": 250, "end" : 300, "rate" : 15  },
+                  { "start": 300, "end" : 570, "rate" : 18  },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ],
+          "West" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 15   },
+                  { "start": 250, "end" : 300, "rate" : 20  },
+                  { "start": 300, "end" : 570, "rate" : 15   },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ]
+        }
+      },
+      {
+        "road" : 3,
+        "direction" : "x",
+        "rates" :
+        {
+          "East" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 15   },
+                  { "start": 250, "end" : 300, "rate" : 17  },
+                  { "start": 300, "end" : 570, "rate" : 12  },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ],
+          "West" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 12   },
+                  { "start": 250, "end" : 300, "rate" : 10  },
+                  { "start": 300, "end" : 570, "rate" : 9   },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ]
+        }
+      },
+      {
+        "road" : 4,
+        "direction" : "x",
+        "rates" :
+        {
+          "East" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 15  },
+                  { "start": 250, "end" : 300, "rate" : 18  },
+                  { "start": 300, "end" : 570, "rate" : 12  },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ],
+          "West" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 9   },
+                  { "start": 250, "end" : 300, "rate" : 13  },
+                  { "start": 300, "end" : 570, "rate" : 3   },
+                  { "start": 570, "end" : 600, "rate" : 100 }
+              ]
+        }
+      },
+      {
+        "road" : 6,
+        "direction" : "x",
+        "rates" :
+        {
+          "East" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 20  },
+                  { "start": 100, "end" : 250, "rate" : 6   },
+                  { "start": 250, "end" : 300, "rate" : 10  },
+                  { "start": 300, "end" : 570, "rate" : 18  },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ],
+          "West" :
+              [
+                  { "start": 0  , "end" : 100, "rate" : 25  },
+                  { "start": 100, "end" : 250, "rate" : 30   },
+                  { "start": 250, "end" : 300, "rate" : 35  },
+                  { "start": 300, "end" : 570, "rate" : 15   },
+                  { "start": 570, "end" : 600, "rate" : 100   }
+              ]
+        }
+      }
+    ]
+}
