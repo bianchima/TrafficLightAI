@@ -9,7 +9,7 @@ parsed from the behavior text file, and are specific for a particular layout.
 import random
 
 import util
-from util import Card
+from util import Card, DIRECTION_COLORS
 import parser
 
 
@@ -28,6 +28,7 @@ class Car(object):
         self.random_dir = random.random()
         self.road = None
         self.road_index = None
+        self.color = None
 
     def get_random(self):
         return self.random_dir
@@ -38,6 +39,8 @@ class Car(object):
     def set_road(self, road, road_index):
         self.road = road
         self.road_index = road_index
+        if self.color is None:
+            self.color = DIRECTION_COLORS[road.card]
 
     def move_car(self):
         self.road_index += 1
@@ -197,24 +200,24 @@ class Road(object):
             self.road[location] = None
             if location+1 >= len(self.road):
                 # TODO: end of the road, just remove and add waiting time to total (outside)
-                return True
+                return True, car.waiting_steps
             else:
                 # nothing in front, move to next space
                 self.road[location+1] = car
                 car.move_car()
-                return True
+                return True, 0
 
         elif type(next_obj) == Intersection:
             b = next_obj.handle_car(car, self.card, last)
             # handle_car should put it where it should go
             # TODO: keep track of time waiting for cars
-            return b
+            return b, 0
 
         else:
             # cannot move - car in front
             if last:
                 car.waiting_steps += 1
-            return False
+            return False, 0
 
 class Map(object):
 

@@ -4,9 +4,9 @@
     {
         "road" : 1,
         "direction" : "y",
-        "rates" : 
+        "rates" :
         {
-            "North" : 
+            "North" :
             [
                 { "start": 0,   "end" : 200, "rate" : 10 },
                 { "start": 200, "end" : 400, "rate" : 5 }
@@ -21,9 +21,9 @@
     {
         "road" : 1,
         "direction" : "x",
-        "rates" : 
+        "rates" :
         {
-            "West" : 
+            "West" :
             [
                 { "start": 0,   "end" : 200, "rate" : 10 },
                 { "start": 200, "end" : 400, "rate" : 5 }
@@ -38,9 +38,9 @@
     {
         "road" : 3,
         "direction" : "x",
-        "rates" : 
+        "rates" :
         {
-            "West" : 
+            "West" :
             [
                 { "start": 0,   "end" : 200, "rate" : 10 },
                 { "start": 200, "end" : 400, "rate" : 5 }
@@ -55,9 +55,9 @@
     {
         "road" : 2,
         "direction" : "y",
-        "rates" : 
+        "rates" :
         {
-            "North" : 
+            "North" :
             [
                 { "start": 0,   "end" : 200, "rate" : 10 },
                 { "start": 200, "end" : 400, "rate" : 5 }

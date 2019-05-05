@@ -1,9 +1,11 @@
+import time
+import random
+
 import map
 import parser
 from simulation_graphics import SimulationWindow
 from util import Card
 import util
-import random
 
 random.seed("LOLZ") # TODO: Remove seed
 
@@ -17,7 +19,7 @@ p = parser.parse("samplelayout.json")
 t = parser.Traffic("sampletraffic.json", "samplelayout.json")
 f = parser.Flow(p)
 
-light_min_time = 10
+light_min_time = 5
 
 class Simulation :
 
@@ -33,6 +35,8 @@ class Simulation :
         # create a map
 
         self.current_time = 0
+
+        self.waiting_steps = 0
 
         self.map = map.Map(t, f)
         self.traffic_pattern = traffic_pattern
@@ -73,9 +77,10 @@ class Simulation :
                         car = array[pos]
                         if type(car) == map.Car and car not in moved_cars:
                             all_cars.add(car)
-                            moved = road.advance_car(pos, i == len(self.intersections) - 1)
+                            moved, waiting = road.advance_car(pos, i == len(self.intersections) - 1)
                             if moved :
                                 moved_cars.add(car)
+                            self.waiting_steps += waiting
 
         for roadPair in roads : # roadPairs is a tuple of two road
             for road in roadPair :
@@ -89,16 +94,38 @@ class Simulation :
                 roadNum = car.road.global_loc * self.map.get_block_size()
                 roadDir = car.road.card
                 location = car.road_index
-                car_info.append((roadNum, roadDir, location))
+                color = car.color
+                car_info.append((roadNum, roadDir, location, color))
             self.simulationWindow.undrawCars()
             self.simulationWindow.drawCars(car_info)
             self.simulationWindow.update()
-        
+
         # TODO:
         #  what algorithm are we using? Cars might be stuck, easier to debug with
         # graphics
 
         return True # sucess
+
+    def get_results(self):
+        on_road_time = 0
+        x_roads = self.map.x_roads
+        y_roads = self.map.y_roads
+        roads = [x_roads[k] for k in x_roads] + [y_roads[k] for k in y_roads]
+
+        for roadPair in roads :
+            for road in roadPair :
+                for i in road.road:
+                    if type(i) is map.Car:
+                         on_road_time += i.waiting_steps
+                for car in road.spawner.queue:
+                    on_road_time += car.waiting_steps
+
+        return self.waiting_steps + on_road_time
+
+    def run(self):
+        while s.stepTime() :
+            if self.simulationWindow is not None:
+                time.sleep(0.05)
 
 
 
@@ -111,8 +138,6 @@ for i in [(1,1), (1,2), (3,1), (3,2)] :
 
 s = Simulation(pattern, True)
 
-import time
-time.sleep(4)
-while s.stepTime() :
-    time.sleep(0.1)
+s.run()
 
+print s.get_results()

@@ -1,7 +1,7 @@
 from graphics import *
 import map
 import parser
-from util import Card
+from util import Card, DIRECTION_COLORS
 
 ################################################################
 ############################ Graphics ##########################
@@ -10,12 +10,12 @@ from util import Card
 BLOCK_PIXELS = 10 # Number of pixels per block
 CAR_RADIUS = 4
 CAR_ROAD_OFFSET = 0.3
-DIRECTION_COLORS = {
-    Card.N : "salmon",
-    Card.S : "red",
-    Card.E : "blue",
-    Card.W : "cyan",
-}
+# DIRECTION_COLORS = {
+#     Card.N : "salmon",
+#     Card.S : "red",
+#     Card.E : "blue",
+#     Card.W : "cyan",
+# }
 
 class SimulationWindow :
 
@@ -63,7 +63,7 @@ class SimulationWindow :
     def drawCars(self, carLocations) :
         """
             takes in an iterable of the form
-            {(road#, roadDirection, positionOnRoad), ...}
+            {(road#, roadDirection, positionOnRoad, color), ...}
             where :
                 road# is the y axis of an x-road or x axis of a y-road
                     measured in block coordinates
@@ -75,7 +75,7 @@ class SimulationWindow :
         # where blockLocation is (x,y) in block coordinates
         carInfo = []
         xLen, yLen = self.blockDimensions
-        for roadNum, roadDir, position in carLocations :
+        for roadNum, roadDir, position, color in carLocations :
             blockLocation = None
             if roadDir == Card.E : # x-road
                 blockLocation = self.getPixelCoord(position, roadNum + CAR_ROAD_OFFSET)
@@ -85,12 +85,12 @@ class SimulationWindow :
                 blockLocation = self.getPixelCoord(roadNum + CAR_ROAD_OFFSET, yLen - position)
             elif roadDir == Card.S : # y-road
                 blockLocation = self.getPixelCoord(roadNum - CAR_ROAD_OFFSET, position)
-            carInfo.append((Circle(blockLocation, CAR_RADIUS), roadDir))
+            carInfo.append((Circle(blockLocation, CAR_RADIUS), roadDir, color))
 
-        for car, direction in carInfo:
-            car.setFill(DIRECTION_COLORS[direction])
+        for car, direction, color in carInfo:
+            car.setFill(color)
             self.draw(car)
-        self.drawnCars += [car for car, dir in carInfo]
+        self.drawnCars += [car for car, dir, color in carInfo]
 
     def update(self) :
         self.window.update()

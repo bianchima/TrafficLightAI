@@ -26,3 +26,10 @@ intersection_states = [
   ((Card.W, Card.N), (Card.W, Card.W), (Card.E, Card.E), (Card.E, Card.S)),
   ((Card.W, Card.N), (Card.E, Card.S), (Card.S, Card.E), (Card.N, Card.W))
 ]
+
+DIRECTION_COLORS = {
+    Card.N : "salmon",
+    Card.S : "red",
+    Card.E : "blue",
+    Card.W : "cyan",
+}
