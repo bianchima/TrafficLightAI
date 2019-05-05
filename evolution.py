@@ -35,7 +35,7 @@ class Evolution :
         self.population_size = population_size
         for pop in range(population_size):
             s = ""
-            for i in range(length):
+            for i in range(int(length)):
                 s += str((random.choice([0, 1])))
             self.population.append(s)
         self.current_fitnesses = self.evaluate_all()
@@ -120,14 +120,14 @@ class interEvo(Evolution):
         s.run()
         return s.get_results()
 
-ie = interEvo(8*4*400/5, 25)
-print ie.convert(ie.get_current_best())
-print ie.evaluate(ie.convert(ie.get_current_best()))
-for i in range(100):
+ie = interEvo(int(8*4*400/5), 10)
+print(ie.convert(ie.get_current_best()))
+print(ie.evaluate(ie.convert(ie.get_current_best())))
+for i in range(5):
     ie.next_gen()
     print("Gen {} done".format(i))
-print ie.convert(ie.get_current_best())
-print ie.evaluate(ie.convert(ie.get_current_best()))
+print(ie.convert(ie.get_current_best()))
+print(ie.evaluate(ie.convert(ie.get_current_best())))
 
 
 

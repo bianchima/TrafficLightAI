@@ -72,8 +72,7 @@ class Simulation :
             for roadPair in roads : # roadPairs is a tuple of two road
                 for road in roadPair :
                     array = road.road
-                    iterable = range(len(array))
-                    iterable.reverse()
+                    iterable = reversed(range(len(array)))
                     for pos in iterable :
                         car = array[pos]
                         if type(car) == map.Car and car not in moved_cars:
