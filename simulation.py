@@ -6,6 +6,7 @@ import parser
 from simulation_graphics import SimulationWindow
 from util import Card
 import util
+from inpututil import *
 
 random.seed("LOLZ") # TODO: Remove seed
 
@@ -15,11 +16,11 @@ random.seed("LOLZ") # TODO: Remove seed
 
 # TODO: All of the time step and execution code
 
-p = parser.parse("samplelayout.json")
-t = parser.Traffic("sampletraffic.json", "samplelayout.json")
-f = parser.Flow(p)
-
-light_min_time = 5
+# p = parser.parse("samplelayout.json")
+# t = parser.Traffic("sampletraffic.json", "samplelayout.json")
+# f = parser.Flow(p)
+#
+# light_min_time = 5
 
 class Simulation :
 
@@ -50,7 +51,7 @@ class Simulation :
     def stepTime(self):
         # step forward in time
         x = self.current_time % light_min_time
-        y = self.current_time / light_min_time
+        y = int(self.current_time / light_min_time)
         if x == 0:
             for i in self.intersections:
                 lightPattern = self.traffic_pattern[i.get_global_location()]
@@ -123,21 +124,23 @@ class Simulation :
         return self.waiting_steps + on_road_time
 
     def run(self):
-        while s.stepTime() :
+        while self.stepTime() :
             if self.simulationWindow is not None:
                 time.sleep(0.05)
 
 
 
-pattern = {}
-for i in [(1,1), (1,2), (3,1), (3,2)] :
-    pattern[i] = []
-    for q in range(400 / 5) :
-        pattern[i].append(random.randint(0,16))
-
-
-s = Simulation(pattern, True)
-
-s.run()
-
-print s.get_results()
+# pattern = {}
+# for i in [(1,1), (1,2), (3,1), (3,2)] :
+#     pattern[i] = []
+#     for q in range(int(400 / 5)) :
+#         pattern[i].append(random.randint(0,16))
+#
+# # to generate pattern from binary string, take mod 17 of 8-bit int from string
+# # pattern needs list of all intersections, and the range of time, and the light_min_time
+# #
+# s = Simulation(pattern, True)
+#
+# s.run()
+#
+# print(s.get_results())

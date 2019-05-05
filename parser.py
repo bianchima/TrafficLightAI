@@ -80,10 +80,11 @@ class Traffic:
         t = parse(traffic_file)
         m = parse(map_file)
 
-        self.parsed_traffic = t
+        self.simulation_length = t["simulation_length"]
+        self.parsed_traffic = t["road_rates"]
         self.parsed_map = m
 
-        for i in t:
+        for i in self.parsed_traffic:
             r = i["road"]
             d = i["direction"]
             self.road_spawns[d][r] = i["rates"]

@@ -1,72 +1,75 @@
 # start times inclusive, end times exclusive
 # intersection specified by [x,y]
-[
-    {
-        "road" : 1,
-        "direction" : "y",
-        "rates" :
-        {
-            "North" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ],
-            "South" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ]
-        }
-    },
-    {
-        "road" : 1,
-        "direction" : "x",
-        "rates" :
-        {
-            "West" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ],
-            "East" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ]
-        }
-    },
-    {
-        "road" : 3,
-        "direction" : "x",
-        "rates" :
-        {
-            "West" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ],
-            "East" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ]
-        }
-    },
-    {
-        "road" : 2,
-        "direction" : "y",
-        "rates" :
-        {
-            "North" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ],
-            "South" :
-            [
-                { "start": 0,   "end" : 200, "rate" : 10 },
-                { "start": 200, "end" : 400, "rate" : 5 }
-            ]
-        }
-    }
-]
+{
+  "simulation_length" : 400,
+  "road_rates" : [
+      {
+          "road" : 1,
+          "direction" : "y",
+          "rates" :
+          {
+              "North" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ],
+              "South" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ]
+          }
+      },
+      {
+          "road" : 1,
+          "direction" : "x",
+          "rates" :
+          {
+              "West" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ],
+              "East" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ]
+          }
+      },
+      {
+          "road" : 3,
+          "direction" : "x",
+          "rates" :
+          {
+              "West" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ],
+              "East" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ]
+          }
+      },
+      {
+          "road" : 2,
+          "direction" : "y",
+          "rates" :
+          {
+              "North" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ],
+              "South" :
+              [
+                  { "start": 0,   "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 400, "rate" : 5 }
+              ]
+          }
+      }
+  ]
+}
