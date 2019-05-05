@@ -8,8 +8,8 @@ from util import Card, DIRECTION_COLORS
 ################################################################
 
 BLOCK_PIXELS = 10 # Number of pixels per block
-CAR_RADIUS = 4
-CAR_ROAD_OFFSET = 0.3
+CAR_RADIUS = 5
+CAR_ROAD_OFFSET = 0.5
 # DIRECTION_COLORS = {
 #     Card.N : "salmon",
 #     Card.S : "red",

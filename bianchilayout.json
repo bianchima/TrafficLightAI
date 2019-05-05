@@ -1,0 +1,282 @@
+# SAMPLE TEXT FILE
+
+{
+    "block_size": 20,
+    "x": 6,
+    "x-roads": [1,3,4],
+    "y": 5,
+    "y-roads": [1,2,5],
+    "flow-behavior" :
+    [
+        {
+            "intersection" : [1,1],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "East" :
+                {
+                    "East" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                },
+                "South" :
+                {
+                    "South" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "West" :
+                {
+                    "West" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                }
+            }
+        },
+        {
+            "intersection" : [1,2],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "East" :
+                {
+                    "East" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                },
+                "South" :
+                {
+                    "South" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "West" :
+                {
+                    "West" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                }
+            }
+        },
+        {
+            "intersection" : [1,5],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.9,
+                    "East" : 0.05,
+                    "West" : 0.05
+                },
+                "East" :
+                {
+                    "East" : 0.2,
+                    "North" : 0.4,
+                    "South" : 0.4
+                },
+                "South" :
+                {
+                    "South" : 0.9,
+                    "East" : 0.05,
+                    "West" : 0.05
+                },
+                "West" :
+                {
+                    "West" : 0.2,
+                    "North" : 0.4,
+                    "South" : 0.4
+                }
+            }
+        },
+        {
+            "intersection" : [3,1],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "East" :
+                {
+                    "East" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                },
+                "South" :
+                {
+                    "South" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "West" :
+                {
+                    "West" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                }
+            }
+        },
+        {
+            "intersection" : [3,2],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "East" :
+                {
+                    "East" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                },
+                "South" :
+                {
+                    "South" : 0.7,
+                    "East" : 0.15,
+                    "West" : 0.15
+                },
+                "West" :
+                {
+                    "West" : 0.7,
+                    "North" : 0.15,
+                    "South" : 0.15
+                }
+            }
+        },
+        {
+            "intersection" : [3,5],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.9,
+                    "East" : 0.05,
+                    "West" : 0.05
+                },
+                "East" :
+                {
+                    "East" : 0.2,
+                    "North" : 0.4,
+                    "South" : 0.4
+                },
+                "South" :
+                {
+                    "South" : 0.9,
+                    "East" : 0.05,
+                    "West" : 0.05
+                },
+                "West" :
+                {
+                    "West" : 0.2,
+                    "North" : 0.4,
+                    "South" : 0.4
+                }
+            }
+        },
+        {
+            "intersection" : [4,1],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.2,
+                    "East" : 0.4,
+                    "West" : 0.4
+                },
+                "East" :
+                {
+                    "East" : 0.9,
+                    "North" : 0.05,
+                    "South" : 0.05
+                },
+                "South" :
+                {
+                    "South" : 0.2,
+                    "East" : 0.4,
+                    "West" : 0.4
+                },
+                "West" :
+                {
+                    "West" : 0.9,
+                    "North" : 0.05,
+                    "South" : 0.05
+                }
+            }
+        },
+        {
+            "intersection" : [4,2],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.2,
+                    "East" : 0.4,
+                    "West" : 0.4
+                },
+                "East" :
+                {
+                    "East" : 0.9,
+                    "North" : 0.05,
+                    "South" : 0.05
+                },
+                "South" :
+                {
+                    "South" : 0.2,
+                    "East" : 0.4,
+                    "West" : 0.4
+                },
+                "West" :
+                {
+                    "West" : 0.9,
+                    "North" : 0.05,
+                    "South" : 0.05
+                }
+            }
+        },
+        {
+            "intersection" : [4,5],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0.45,
+                    "East" : 0.1,
+                    "West" : 0.45
+                },
+                "East" :
+                {
+                    "East" : 0.45,
+                    "North" : 0.45,
+                    "South" : 0.1
+                },
+                "South" :
+                {
+                    "South" : 0.1,
+                    "East" : 0.1,
+                    "West" : 0.9
+                },
+                "West" :
+                {
+                    "West" : 0.1,
+                    "North" : 0.9,
+                    "South" : 0.1
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+# start times inclusive, end times exclusive
+# intersection specified by [x,y]
+{
+  "simulation_length" : 100,
+  "road_rates" : [
+      {
+          "road" : 1,
+          "direction" : "y",
+          "rates" :
+          {
+              "North" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 5 }
+              ],
+              "South" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 5 }
+              ]
+          }
+      },
+      {
+          "road" : 1,
+          "direction" : "x",
+          "rates" :
+          {
+              "West" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 5 }
+              ],
+              "East" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 5 }
+              ]
+          }
+      }
+  ]
+}

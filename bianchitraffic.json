@@ -1,0 +1,135 @@
+# start times inclusive, end times exclusive
+# intersection specified by [x,y]
+{
+  "simulation_length" : 600,
+  "road_rates" : [
+      {
+          "road" : 1,
+          "direction" : "x",
+          "rates" :
+          {
+              "West" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 50 }
+              ],
+              "East" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 8 },
+                  { "start": 200, "end" : 400, "rate" : 20 },
+                  { "start": 400, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 100 }
+              ]
+          }
+      },
+      {
+          "road" : 3,
+          "direction" : "x",
+          "rates" :
+          {
+              "West" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 50 }
+              ],
+              "East" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 8 },
+                  { "start": 200, "end" : 400, "rate" : 20 },
+                  { "start": 400, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 100 }
+              ]
+          }
+      },
+      {
+          "road" : 4,
+          "direction" : "x",
+          "rates" :
+          {
+              "West" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 50 }
+              ],
+              "East" :
+              [
+                  { "start": 0,   "end" : 350, "rate" : 20 },
+                  { "start": 350, "end" : 450, "rate" : 5 },
+                  { "start": 450, "end" : 600, "rate" : 15 }
+              ]
+          }
+      },
+      {
+          "road" : 1,
+          "direction" : "y",
+          "rates" :
+          {
+              "North" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 50 }
+              ],
+              "South" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 8 },
+                  { "start": 200, "end" : 400, "rate" : 20 },
+                  { "start": 400, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 100 }
+              ]
+          }
+      },
+      {
+          "road" : 2,
+          "direction" : "y",
+          "rates" :
+          {
+              "North" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 50 }
+              ],
+              "South" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 8 },
+                  { "start": 200, "end" : 400, "rate" : 20 },
+                  { "start": 400, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 100 }
+              ]
+          }
+      },
+      {
+          "road" : 5,
+          "direction" : "y",
+          "rates" :
+          {
+              "North" :
+              [
+                  { "start": 0,   "end" : 100, "rate" : 30 },
+                  { "start": 100, "end" : 200, "rate" : 10 },
+                  { "start": 200, "end" : 500, "rate" : 30 },
+                  { "start": 500, "end" : 600, "rate" : 50 }
+              ],
+              "South" :
+              [
+                  { "start": 0,   "end" : 350, "rate" : 20 },
+                  { "start": 350, "end" : 450, "rate" : 5 },
+                  { "start": 450, "end" : 600, "rate" : 15 }
+              ]
+          }
+      }
+  ]
+}

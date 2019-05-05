@@ -1,0 +1,42 @@
+# SAMPLE TEXT FILE
+
+{
+    "block_size": 15,
+    "x": 2,
+    "x-roads": [1],
+    "y": 2,
+    "y-roads": [1],
+    "flow-behavior" :
+    [
+        {
+            "intersection" : [1,1],
+            "pattern" :
+            {
+                "North" :
+                {
+                    "North" : 0,
+                    "East" : 1,
+                    "West" : 0
+                },
+                "East" :
+                {
+                    "East" : 0,
+                    "North" : 0,
+                    "South" : 1
+                },
+                "South" :
+                {
+                    "South" : 0,
+                    "East" : 0,
+                    "West" : 1
+                },
+                "West" :
+                {
+                    "West" : 0,
+                    "North" : 1,
+                    "South" : 0
+                }
+            }
+        }
+    ]
+}

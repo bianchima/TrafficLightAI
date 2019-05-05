@@ -36,6 +36,7 @@ class Evolution :
     __metaclass__ = ABCMeta
 
     def __init__(self, length, population_size):
+        random.seed()
         self.population = []
         self.population_size = population_size
         for pop in range(population_size):
@@ -43,7 +44,7 @@ class Evolution :
             for i in range(int(length)):
                 s += str((random.choice([0, 1])))
             self.population.append(s)
-        self.mutation_probability = 20.0/length  # XXX
+        self.mutation_probability = 2.0/length  # XXX
         self.current_fitnesses = self.evaluate_all()
 
     @abstractmethod
@@ -66,6 +67,7 @@ class Evolution :
         return fitness
 
     def sample(self, fitness) :
+        random.seed()
         rand = random.random()
         curr_sum = 0
         for i in range(len(fitness)):
@@ -78,6 +80,7 @@ class Evolution :
         return self.population[i]
 
     def next_gen(self):
+        random.seed()
         fitness = self.current_fitnesses
         ng = []
         ng.append(self.get_current_best())
@@ -89,7 +92,7 @@ class Evolution :
                 ng.append(string)
         self.population = ng
         self.current_fitnesses = self.evaluate_all()
-        self.mutation_probability *= .975 #XXX
+        self.mutation_probability *= 1 #XXX
 
     def mutate(self, string):
         # assumes len(string) >= 3
@@ -133,12 +136,13 @@ class interEvo(Evolution):
         # return s.get_results()
         return evaluate_(item)
 
-ie = interEvo(int(8*4*400/5), 20) # TODO: make variable based on variables # XXX
+string_length = int(8*len(iu.f.intersections)*iu.t.simulation_length/iu.light_min_time)
+ie = interEvo(string_length, 200)  # XXX
 print(ie.convert(ie.get_current_best()))
 s = simulation.Simulation(ie.convert(ie.get_current_best()))
 s.run()
 print(s.get_results())
-for i in range(30): # XXX
+for i in range(500): # XXX
     ie.next_gen()
     print("Gen {} done".format(i+1))
     s = simulation.Simulation(ie.convert(ie.get_current_best()))
