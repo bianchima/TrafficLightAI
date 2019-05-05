@@ -11,16 +11,21 @@ import simulation
 import random
 import struct
 import multiprocessing
-from operator import methodcaller
+from multithreadingHelper import helperFunc, evaluate_
 
 random.seed("thing")
 
-# numCpus = multiprocessing.cpu_count()
-# pool = multiprocessing.Pool(1)
+numCpus = multiprocessing.cpu_count()
+pool = multiprocessing.Pool(processes=numCpus)
 
+# def helperFunc(args):
+#     return args*args
+    # return args[0].evaluate(args[1])
 
-# def helper(args):
-#     return args[0].evaluate(args[1])
+# print("f")
+# f = pool.starmap(helperFunc, [(1,),(2,),(3,)])
+# print("\\f")
+
 # class thread_helper:
 #     def __init__(self, evo):
 #         self.evo = evo
@@ -38,6 +43,7 @@ class Evolution :
             for i in range(int(length)):
                 s += str((random.choice([0, 1])))
             self.population.append(s)
+        self.mutation_probability = 20.0/length  # XXX
         self.current_fitnesses = self.evaluate_all()
 
     @abstractmethod
@@ -49,9 +55,12 @@ class Evolution :
         pass
 
     def evaluate_all(self):
-        # objects = [self.convert(i) for i in self.population]
-        # fitness = pool.map(helper, [(self, obj) for obj in objects])
-        fitness = [self.evaluate(self.convert(i)) for i in self.population]
+        objects = [(self.convert(i),) for i in self.population]
+        # fitness = pool.starmap(helperFunc, [(1,),(2,),(3,)])
+        # print(fitness)
+        # fitness = pool.starmap(self.evaluate, objects)
+        fitness = pool.starmap(helperFunc, objects)
+        # fitness = [self.evaluate(self.convert(i)) for i in self.population]
         s = sum(fitness)
         fitness = [i / float(s) for i in fitness]
         return fitness
@@ -74,15 +83,18 @@ class Evolution :
         ng.append(self.get_current_best())
         for i in range(1, self.population_size):
             string = self.population[self.sample(fitness)]
-            ng.append(self.mutate(string))
+            if random.random() < .75:
+                ng.append(self.mutate(string))
+            else:
+                ng.append(string)
         self.population = ng
         self.current_fitnesses = self.evaluate_all()
+        self.mutation_probability *= .975 #XXX
 
     def mutate(self, string):
         # assumes len(string) >= 3
-        mutation_probability = 20.0/len(string)
         for i in range(len(string)):
-            if random.random() < mutation_probability:
+            if random.random() < self.mutation_probability:
                 char = None
                 if string[i] == "0":
                     char = "1"
@@ -116,18 +128,27 @@ class interEvo(Evolution):
         return pattern
 
     def evaluate(self, item):
-        s = simulation.Simulation(item)
-        s.run()
-        return s.get_results()
+        # s = simulation.Simulation(item)
+        # s.run()
+        # return s.get_results()
+        return evaluate_(item)
 
-ie = interEvo(int(8*4*400/5), 10)
+ie = interEvo(int(8*4*400/5), 20) # TODO: make variable based on variables # XXX
 print(ie.convert(ie.get_current_best()))
-print(ie.evaluate(ie.convert(ie.get_current_best())))
-for i in range(5):
+s = simulation.Simulation(ie.convert(ie.get_current_best()))
+s.run()
+print(s.get_results())
+for i in range(30): # XXX
     ie.next_gen()
-    print("Gen {} done".format(i))
+    print("Gen {} done".format(i+1))
+    s = simulation.Simulation(ie.convert(ie.get_current_best()))
+    s.run()
+    print(s.get_results())
+    print()
 print(ie.convert(ie.get_current_best()))
-print(ie.evaluate(ie.convert(ie.get_current_best())))
+s = simulation.Simulation(ie.convert(ie.get_current_best()))
+s.run()
+print(s.get_results())
 
 
 
