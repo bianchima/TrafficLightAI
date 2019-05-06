@@ -44,7 +44,7 @@ class Evolution :
             for i in range(int(length)):
                 s += str((random.choice([0, 1])))
             self.population.append(s)
-        self.mutation_probability = 2.0/length  # XXX
+        self.mutation_probability = 30.0/length  # XXX
         self.current_fitnesses = self.evaluate_all()
 
     @abstractmethod
@@ -136,23 +136,24 @@ class interEvo(Evolution):
         # return s.get_results()
         return evaluate_(item)
 
-string_length = int(8*len(iu.f.intersections)*iu.t.simulation_length/iu.light_min_time)
-ie = interEvo(string_length, 200)  # XXX
-print(ie.convert(ie.get_current_best()))
-s = simulation.Simulation(ie.convert(ie.get_current_best()))
-s.run()
-print(s.get_results())
-for i in range(500): # XXX
-    ie.next_gen()
-    print("Gen {} done".format(i+1))
+if __name__ == "__main__":
+    string_length = int(8*len(iu.f.intersections)*iu.t.simulation_length/iu.light_min_time)
+    ie = interEvo(string_length, 20)  # XXX
+    print(ie.convert(ie.get_current_best()))
     s = simulation.Simulation(ie.convert(ie.get_current_best()))
     s.run()
     print(s.get_results())
-    print()
-print(ie.convert(ie.get_current_best()))
-s = simulation.Simulation(ie.convert(ie.get_current_best()))
-s.run()
-print(s.get_results())
+    for i in range(50): # XXX
+        ie.next_gen()
+        print("Gen {} done".format(i+1))
+        s = simulation.Simulation(ie.convert(ie.get_current_best()))
+        s.run()
+        print(s.get_results())
+        print()
+    print(ie.convert(ie.get_current_best()))
+    s = simulation.Simulation(ie.convert(ie.get_current_best()))
+    s.run()
+    print(s.get_results())
 
 
 

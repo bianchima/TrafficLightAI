@@ -1,13 +1,20 @@
 import parser
+# from run import setup
 
-# p = parser.parse("samplelayout.json")
-# t = parser.Traffic("sampletraffic.json", "samplelayout.json")
+p = None
+t = None
 
-p = parser.parse("bianchilayout.json")
-t = parser.Traffic("bianchitraffic.json", "bianchilayout.json")
+setup = 0
 
-# p = parser.parse("rightlayout.json")
-# t = parser.Traffic("righttraffic.json", "rightlayout.json")
+if setup == 0:
+    p = parser.parse("samplelayout.json")
+    t = parser.Traffic("sampletraffic.json", "samplelayout.json")
+elif setup == 1:
+    p = parser.parse("bianchilayout.json")
+    t = parser.Traffic("bianchitraffic.json", "bianchilayout.json")
+else:
+    p = parser.parse("rightlayout.json")
+    t = parser.Traffic("righttraffic.json", "rightlayout.json")
 
 f = parser.Flow(p)
 
