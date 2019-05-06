@@ -138,12 +138,12 @@ class interEvo(Evolution):
 
 if __name__ == "__main__":
     string_length = int(8*len(iu.f.intersections)*iu.t.simulation_length/iu.light_min_time)
-    ie = interEvo(string_length, 20)  # XXX
+    ie = interEvo(string_length, 10)  # XXX
     print(ie.convert(ie.get_current_best()))
     s = simulation.Simulation(ie.convert(ie.get_current_best()))
     s.run()
     print(s.get_results())
-    for i in range(50): # XXX
+    for i in range(100): # XXX
         ie.next_gen()
         print("Gen {} done".format(i+1))
         s = simulation.Simulation(ie.convert(ie.get_current_best()))

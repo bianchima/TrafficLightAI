@@ -4,7 +4,7 @@ import parser
 p = None
 t = None
 
-setup = 0
+setup = 1
 
 if setup == 0:
     p = parser.parse("samplelayout.json")
