@@ -7,8 +7,8 @@ from util import Card, DIRECTION_COLORS
 ############################ Graphics ##########################
 ################################################################
 
-BLOCK_PIXELS = 10 # Number of pixels per block
-CAR_RADIUS = 5
+BLOCK_PIXELS = 7 # Number of pixels per block
+CAR_RADIUS = 4
 CAR_ROAD_OFFSET = 0.5
 # DIRECTION_COLORS = {
 #     Card.N : "salmon",
@@ -93,7 +93,7 @@ class SimulationWindow :
         self.drawnCars += [car for car, dir, color in carInfo]
 
     def update(self) :
-        self.window.update()
+        update(30)
 
     def undrawCars(self) :
         for car in self.drawnCars :

@@ -124,8 +124,7 @@ class Simulation :
 
     def run(self):
         while self.stepTime() :
-            if self.simulationWindow is not None:
-                time.sleep(0.1)
+            pass
 
 
 if __name__ == "__main__":
