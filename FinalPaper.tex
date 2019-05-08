@@ -1,0 +1,74 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath} 
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{wrapfig}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\title{Application of Genetic Algorithms in Optimizing Traffic Flow}
+\author{Matthew Bianchi and Drew Neely}
+ 
+\begin{document}
+
+\maketitle
+
+Our group chose to solve the societal problem of traffic caused by traffic lights. 
+The average urban driver will spend a lot of time stuck in traffic, so reducing this wasted time can improve productivity of society, allow workers to have more time to themselves not lost sitting in gridlock, and reduce frustration on the road.
+The goal of this project was to choose a traffic light pattern for a specific city sector that minimizes the amount of time cars spend stopped, what we will hereon refer to as wait time.
+We optimized traffic lights at a set of several intersections within a few city blocks, reducing the wait time of all cars and increasing intersection flow in that section of the city. 
+In order to solve this, we used reinforcement learning techniques, rewarding minimizing wait time and increasing flow through the intersection. 
+We used simulated datasets and trained different networks on a variety of scenarios, such as rush hour, light traffic and regular traffic, and on city grids of varying sizes. 
+We chose to use an evolutionary algorithm, as the nature of the problem suggests using a hill climbing algorithm, where repeated small improvements build up gradually over time. 
+
+There are many factors on roads that can affect traffic, including lights, speed, and number of lanes.
+Our problem focused on controlling the light pattern at intersections in a city grid.
+By changing the light pattern, we could control the flow of cars through the city and reduce the amount of time cars have to wait at an intersection.
+We chose to use two-way, one-lane roads for our city for simplicity of simulation, and so we could focus on the lights as a means of reducing traffic.
+We chose to ignore the number of lanes, and treated each road as having the same speed limit, which is common in city centers.
+
+\section*{Method}
+
+We chose to approach this problem as a reinforcement learning problem.
+Our goal was to train a network with the intent to reduce a heuristic, namely the total waiting time of all cars at intersections.
+Specifically, we chose to use a genetic algorithm with mutations.
+A genetic algorithm chooses a population of possible samples, evaluates them, creates a new population based on the results of these samples, and repeats.
+Genetic algorithms are specifically well-suited for optimization problems, as the best of these samples will hill-climb towards optimal solutions.
+Since we always keep the best result of our samples, we will never become less optimal in our new generation of samples, and because of our mutations, we have a chance in every generation of randomly becoming better.
+Over time, this will approach the optimal value.
+
+We chose to implement mutation in our genetic algorithm, but no crossover. 
+We felt that implementing mutation was sufficient for this problem and gave satisfactory results.
+
+
+\section*{Data}
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+\begin{center}
+	\includegraphics[scale=0.5]{screenshot.png}
+	\caption{A sample simulation graphic}
+\end{center}
+\end{wrapfigure}
+
+For this project, we created a simulator for the data.
+This simulator consisted of multiple intersecting roads, with cars traversing along them.
+Cars would move along the road until there is a car stopped in front of them or they reach an intersection where they could not continue, where they would wait until the path clears.
+Each road had a spawner at the end, which would control the rate of cars entering the simulation.
+Each intersection also had designated behaviors for cars, such as ``Most cars traveling North will go straight'' or ``Cars will only turn right at this intersection.''
+The genetic algorithm had the responsibility of learning the patterns these cars will take and adjusting the light pattern to match.
+
+We measured success as improvement over true random intersection behavior.
+We sought at least a 20\% improvement on average over this random behavior.
+We quantified improvement as a reduction in waiting time, which was the parameter we trained on.
+We also had one case where our goal was to remove wait time completely, that being a case where all cars turn right at an intersection.
+This case matches one of the states an intersection could be in, so we tested to see if the algorithm would find this case.
+
+
+\section*{Experimental Results}
+
+We tested the ability of the Genetic Algorithm to reduce waiting times in the simulation on three different scenarios. The first scenario (shown in Figure 1) consisted of two vertical road and two lateral roads. Upon approaching every intersection a car had a 70\% chance of going straight, and a 15\% chance of turning in either direction. The traffic light pattern generated by 100 generations of the genetic algorithm reduced the waiting time by more than 25\% from the average waiting time of a randomly generated traffic light pattern. The second scenario consisted of three vertical roads and three lateral roads. The way the cars entered the map and the choices the cars made at each intersection were set so that a particular path through the map had much more traffic than other roads. This is representative of a traffic pattern that may be expected in a real-world scenario. The genetic algorithm yielded more than 16\% improvement from the average randomly generated traffic pattern. The third scenario we chose to test the algorithm on was chosen specifically because it has an optimal traffic pattern in which no car must wait at any time. This scenario consisted of one intersection where every approaching car will turn right. Since the state of the intersection can be set to allow all right turns at one time, the optimal solution is to always be in this state. The randomly generated traffic pattern caused cars to wait at this intersection for an average of almost two time steps. The genetic algorithm found the optimal solution in aproximately 125 generations, allowing all cars to proceed through the intersection with no delay.
+
+\end{document}
+
