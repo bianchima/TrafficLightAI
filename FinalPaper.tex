@@ -15,7 +15,7 @@
 
 \maketitle
 
-Our group chose to investigate the problem of traffic. 
+Our group chose to investigate the problem of city traffic. 
 The average urban driver will spend a lot of time stuck in traffic, so reducing this wasted time can improve productivity of society, allow people to have more time to themselves not lost sitting in gridlock, and reduce frustration on the road.
 The goal of this project was to choose a traffic light pattern for a specific city sector that minimizes the amount of time cars spend stopped, what we will hereon refer to as wait time.
 We attempted to optimize traffic lights at a set of several intersections within a few city blocks, reducing the wait time of all cars and increasing intersection flow in that section of the city. 
@@ -25,7 +25,7 @@ We chose to use an evolutionary algorithm, as the nature of the problem suggests
 
 There are many factors to consider when trying to optimize the flow of traffic, many of which involve the layout, size, and laws of the roads.
 We chose to hold most of these variables constant for the sake of simplicity by only considering scenarios with two-way roads with one lane in each direction laid out in a grid pattern. 
-We assume all roads have the same speed limit, all cars drive at exactly the speed limit, time that cars spend accelerating from a stop or decelerating to a stop have no affect on traffic flow, and the drivers make no mistakes (eg. not noticing when the light turns from red to green).
+We assume all roads have the same speed limit, all cars drive at exactly the speed limit, time that cars spend accelerating from a stop or decelerating to a stop have no affect on traffic flow, and the drivers make no mistakes (e.g., not noticing when the light turns from red to green).
 
 \section*{Method}
 
@@ -39,8 +39,7 @@ Since we always keep the best result of our samples, we will never become less o
 Over time, this will approach an optimal value.
 
 Many genetic algorithms used crossover between generations in which two randomly selected solutions are made into one by taking elements from each and combining them.
-We chose not to implement crossover in our algorithm.
-We felt that the algorithm with only mutation was sufficient for this problem and gave satisfactory results.
+We chose not to implement crossover in our algorithm, as we felt that the algorithm with only mutation was sufficient for this problem and gave satisfactory results.
 
 
 \section*{Data}
@@ -64,21 +63,21 @@ We defined intersection states as the paths through the intersection which had a
 Each car entering the intersection has the option of going straight, turning left or turning right, the probabilities of which were set in the simulation files.
 In a given state, each exiting road for the intersection was used exactly once, and none of the paths in the intersection were allowed to cross each other (for example, a left turn across oncoming straight traffic).
 Our simulator had a total of 17 different possible states for an intersection.
-Some examples include one road having full right of way and the road to its left turning right and roads travelling in the opposite directions going straight and turning right.
+Some examples include one road having full right of way and the road to its left turning right, and roads travelling in the opposite directions allowing cars to go straight and turning right.
 The pattern of these intersection states was what our genetic algorithm evaluated and mutated.
 
 We measured success as improvement over true random intersection behavior.
 On the larger maps, we sought at least a 20\% improvement on average over this random behavior.
 We quantified improvement as a reduction in waiting time, which was the parameter we trained on.
-We also had one case where our goal was to remove wait time completely, that being a case where all cars turn right at an intersection.
-This case matches one of the states an intersection could be in, so we tested to see if the algorithm would find this case.
+We also had one case in which all cars turn right at an intersection where our goal was to remove wait time completely.
+The traffic pattern required for this case matches one of the states an intersection could be in, so we tested to see if the algorithm would find this state.
 
 
 \section*{Experimental Results}
 
-We tested the ability of the Genetic Algorithm to reduce waiting times in the simulation on three different scenarios. 
+We tested the ability of the genetic algorithm to reduce waiting times in the simulation on three different scenarios. 
 The first scenario (shown in Figure 1) consisted of two vertical road and two lateral roads. 
-Upon approaching every intersection a car had a 70\% chance of going straight, and a 15\% chance of turning in either direction. 
+Upon approaching every intersection a car had a 70\% chance of going straight and a 15\% chance of turning in either direction. 
 The traffic light pattern generated by 100 generations of the genetic algorithm reduced the waiting time by more than 25\% from the average waiting time of a randomly generated traffic light pattern. 
 
 The second scenario consisted of three vertical roads and three lateral roads. 
