@@ -15,7 +15,7 @@
 
 \maketitle
 
-Our group chose to solve the societal problem of traffic caused by traffic lights. 
+Our group chose to investigate the problem of traffic. 
 The average urban driver will spend a lot of time stuck in traffic, so reducing this wasted time can improve productivity of society, allow people to have more time to themselves not lost sitting in gridlock, and reduce frustration on the road.
 The goal of this project was to choose a traffic light pattern for a specific city sector that minimizes the amount of time cars spend stopped, what we will hereon refer to as wait time.
 We attempted to optimize traffic lights at a set of several intersections within a few city blocks, reducing the wait time of all cars and increasing intersection flow in that section of the city. 
@@ -30,15 +30,17 @@ We assume all roads have the same speed limit, all cars drive at exactly the spe
 \section*{Method}
 
 We chose to approach this problem as a reinforcement learning problem.
-Our goal was to train a network with the intent to reduce a heuristic, namely the total waiting time of all cars at intersections.
-Specifically, we chose to use a genetic algorithm with mutations.
-A genetic algorithm chooses a population of possible samples, evaluates them, creates a new population based on the results of these samples, and repeats.
-Genetic algorithms are specifically well-suited for optimization problems, as the best of these samples will hill-climb towards optimal solutions.
+Our goal was to train using a genetic algorithm with the intent to minimize a heuristic value, namely the total waiting time of all cars at intersections.
+The genetic algorithm we created initializes with a randomly seeded set of traffic patters as the first generation.
+The quality of each traffic pattern is evaluated by running a simulation, and some number of the patterns are picked (with repitition) to become a part of the next generation such that the probability of each pattern being picked is proportional to its quality.
+At each iteration, the selected traffic patterns are ``mutated'' so that a few of the traffic signals are randomly changed.
+Genetic algorithms are specifically well-suited for optimization problems, as the best of these samples will ``survive'' to make it into future generations and the algorithm will slowly improve due to random variation.
 Since we always keep the best result of our samples, we will never become less optimal in our new generation of samples, and because of our mutations, we have a chance in every generation of randomly becoming better.
-Over time, this will approach the optimal value.
+Over time, this will approach an optimal value.
 
-We chose to implement mutation in our genetic algorithm, but no crossover. 
-We felt that implementing mutation was sufficient for this problem and gave satisfactory results.
+Many genetic algorithms used crossover between generations in which two randomly selected solutions are made into one by taking elements from each and combining them.
+We chose not to implement crossover in our algorithm.
+We felt that the algorithm with only mutation was sufficient for this problem and gave satisfactory results.
 
 
 \section*{Data}
@@ -52,8 +54,9 @@ We felt that implementing mutation was sufficient for this problem and gave sati
 
 For this project, we created a simulator for the data.
 This simulator consisted of multiple intersecting roads, with cars traversing along them.
-Cars would move along the road until there is a car stopped in front of them or they reach an intersection where they could not continue, where they would wait until the path clears.
-Each road had a spawner at its start, which would control the rate of cars entering the simulation.
+Cars move along the road until there is a car stopped in front of them or until they reach an intersection in a state which does not allow them to pass.
+In these cases they must wait for the path in front of them to clear.
+Each road had a spawner at its start, which controls the rate of cars entering the simulation.
 Each intersection also had designated behaviors for cars, such as ``Most cars traveling North will go straight'' or ``Cars will only turn right at this intersection.''
 The genetic algorithm had the responsibility of learning the patterns these cars will take and adjusting the light pattern to match.
 

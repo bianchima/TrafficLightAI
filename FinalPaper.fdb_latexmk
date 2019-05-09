@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1557427739 "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.tex" "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.pdf" "FinalPaper" 1557427740
-  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.aux" 1557427740 112 d5f950c6a22631b15056499603935a5c ""
-  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.tex" 1557427739 6394 862ae0bd970749202625bfdc54fce36a ""
+["pdflatex"] 1557437227 "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.tex" "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.pdf" "FinalPaper" 1557437228
+  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.aux" 1557437228 112 d5f950c6a22631b15056499603935a5c ""
+  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.tex" 1557437188 8691 9fc870a12ed2beb9fadf4bd67a0fcb59 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1480098701 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -54,12 +54,12 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1523934492 2717033 f61a5287d9c22a39a74f1979fe3f905c ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1523934516 4220280 10cab8fbd7c5a7c52aba9917e190d018 ""
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
-  "FinalPaper.aux" 1557427740 112 d5f950c6a22631b15056499603935a5c ""
-  "FinalPaper.tex" 1557427739 6394 862ae0bd970749202625bfdc54fce36a ""
+  "FinalPaper.aux" 1557437228 112 d5f950c6a22631b15056499603935a5c ""
+  "FinalPaper.tex" 1557437188 8691 9fc870a12ed2beb9fadf4bd67a0fcb59 ""
   "screenshot.png" 1557349676 44077 c52bde8c8a78b35b8fdbd7bd4f14b4f2 ""
   (generated)
-  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.log"
-  "FinalPaper.pdf"
   "FinalPaper.log"
-  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.pdf"
   "FinalPaper.aux"
+  "FinalPaper.pdf"
+  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.log"
+  "/Users/drewneely/Desktop/College/Semester_4/CS343H/TrafficLightAI/FinalPaper.pdf"
