@@ -20,14 +20,12 @@ The average urban driver will spend a lot of time stuck in traffic, so reducing 
 The goal of this project was to choose a traffic light pattern for a specific city sector that minimizes the amount of time cars spend stopped, what we will hereon refer to as wait time.
 We optimized traffic lights at a set of several intersections within a few city blocks, reducing the wait time of all cars and increasing intersection flow in that section of the city. 
 In order to solve this, we used reinforcement learning techniques, rewarding minimizing wait time and increasing flow through the intersection. 
-We used simulated datasets and trained different networks on a variety of scenarios, such as rush hour, light traffic and regular traffic, and on city grids of varying sizes. 
-We chose to use an evolutionary algorithm, as the nature of the problem suggests using a hill climbing algorithm, where repeated small improvements build up gradually over time. 
+We used simulated datasets and trained on a variety of scenarios, such as traffic patterns with rush hour, non-uniform traffic, and on city grids of varying sizes. 
+We chose to use an evolutionary algorithm, as the nature of the problem suggests using a hill climbing algorithm where repeated small improvements build up gradually over time. 
 
-There are many factors on roads that can affect traffic, including lights, speed, and number of lanes.
-Our problem focused on controlling the light pattern at intersections in a city grid.
-By changing the light pattern, we could control the flow of cars through the city and reduce the amount of time cars have to wait at an intersection.
-We chose to use two-way, one-lane roads for our city for simplicity of simulation, and so we could focus on the lights as a means of reducing traffic.
-We chose to ignore the number of lanes, and treated each road as having the same speed limit, which is common in city centers.
+There are many factors to consider when trying to optimize the flow of traffic, many of which involve the layout, size, and laws of the roads.
+We chose to hold most of these variables constant for the sake of simplicity by only considering scenarios with two-way roads with one lane in each direction laid out in a grid pattern. 
+We assume all roads have the same speed limit, all cars drive at exactly the speed limit, time that cars spend accelerating from a stop or decelerating to a stop have no affect on traffic flow, and the drivers make no mistakes (eg. not noticing when the light turns from red to green).
 
 \section*{Method}
 
